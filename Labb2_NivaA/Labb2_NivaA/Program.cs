@@ -11,13 +11,15 @@ namespace Labb2_Niva_A
         static void Main(string[] args)
         {
 
+            //Loop på 25 rader
             for (int rad = 0; rad < 25; rad++)
             {
                 if (rad % 2 == 1)
                 {
-                    Console.Write(" ");
+                    Console.Write(" "); //Skriver ut mellanrummet mellan *
                 }
 
+                //Skriver ut dem tre olika färgerna
                 switch (rad % 3)
                 {
                     case 0:
@@ -33,7 +35,7 @@ namespace Labb2_Niva_A
                         break;
                         
                 }
-
+                //Loop på 39 kolumner som är inuti den första loopen med rader. 
                 for (int kol = 0; kol < 39; kol++)
                     
                 {
@@ -42,7 +44,7 @@ namespace Labb2_Niva_A
                 }
                 Console.WriteLine();
             }
-            
+            //Återställer färgerna i konsollen
             Console.ResetColor();
         }
 
