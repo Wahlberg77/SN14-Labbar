@@ -11,15 +11,41 @@ namespace Labb2_Niva_A
         static void Main(string[] args)
         {
 
-            int farg = 25;
-                
-                for (int rad = 0; <  25; rad ++)
+            for (int rad = 0; rad < 25; rad++)
             {
-                if (rad % 2 = 1)
-                {Console.Write(" ")}
+                if (rad % 2 == 1)
+                {
+                    Console.Write(" ");
+                }
+
+                switch (rad % 3)
+                {
+                    case 0:
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        break;
+
+                    case 1:
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        break;
+
+                    case 2:
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        break;
+                        
+                }
+
+                for (int kol = 0; kol < 39; kol++)
+                    
+                {
+                    Console.Write("* ");
+                    
+                }
+                Console.WriteLine();
             }
-
-
+            
+            Console.ResetColor();
         }
+
     }
 }
+
