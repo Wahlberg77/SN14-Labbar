@@ -15,7 +15,7 @@ namespace VaxelpengarNivaA
 
             int betalade = 0;           // Erhållna beloppet
             double totalsum = 0d;       // Totala bellopet
-            uint subTotal;              // Öresavrundningen 
+            int subTotal;              // Öresavrundningen 
             int tillbaka = 0;           // Tillbaka till kund
             int resultat = 0;
             double roundingOffAmount;   // Tillhör öresavrundningen
@@ -42,7 +42,9 @@ namespace VaxelpengarNivaA
                         Environment.Exit(0);
                     }
                     else
+                    {
                         break;
+                    }
                 }
                 catch
                 {
@@ -73,10 +75,13 @@ namespace VaxelpengarNivaA
                         Console.WriteLine("Totalsumman är för liten. Köpet kunde inte genomföras.");
                         Console.WriteLine("\n");
                         Console.ResetColor();
-                        Environment.Exit(0);
+                        return;
                     }
                     else
+                    
+                    {
                         break;
+                    }
                 }
 
                 catch
@@ -90,75 +95,57 @@ namespace VaxelpengarNivaA
                 }
             }
 
-
-
+            //Öresavrundning
+            subTotal = (int)Math.Round(totalsum);
+            roundingOffAmount = subTotal - totalsum;
+            // Räknar ut Växeln
+            tillbaka = betalade - (int)totalsum;
+            
             //Kvitto
             Console.WriteLine("\nKVITTO");
             Console.WriteLine("-------------------------------");
-
-            Console.WriteLine("{0,-15} : {1,13:c} ", "Totalt", totalsum);
-
-            //Öresavrundning
-            subTotal = (uint)Math.Round(totalsum, 2);
-            roundingOffAmount = subTotal - totalsum;
-            Console.WriteLine("{0,-15} : {1,10:f2} kr", "Öresavrundning", roundingOffAmount);
-
-            // Räknar ut Växeln
-            tillbaka = betalade - (int)totalsum;
-            Console.WriteLine("{0,-15} : {1,10} kr", "Att betala", subTotal);
-            Console.WriteLine("{0,-15} : {1,13:c0} ", "Kontant", betalade);
-            Console.WriteLine("{0,-15} : {1,10} kr", "Tillbaka", tillbaka);
-
+            Console.WriteLine("{0,-15} : {1,10:c2} ", "Totalt", totalsum);
+            Console.WriteLine("{0,-15} : {1,10:c2} ", "Öresavrundning", roundingOffAmount);
+            Console.WriteLine("{0,-15} : {1,10:c0} ", "Att betala", subTotal);
+            Console.WriteLine("{0,-15} : {1,10:c0} ", "Kontant", betalade);
+            Console.WriteLine("{0,-15} : {1,10:c0} ", "Tillbaka", tillbaka);
             Console.WriteLine("-------------------------------");
 
             resultat = tillbaka / 500;
-
             if (resultat > 0)
             {
                 Console.WriteLine("{0,-15} : {1,1}", " 500-lappar", resultat);
                 tillbaka = tillbaka % 500;
             }
-
             resultat = tillbaka / 100;
-
             if (resultat > 0)
             {
                 Console.WriteLine("{0,-15} : {1,1}", " 100-lappar", resultat);
                 tillbaka = tillbaka % 100;
             }
-
             resultat = tillbaka / 50;
-
             if (resultat > 0)
             {
                 Console.WriteLine("{0,-15} : {1,1}", "  50-lappar", resultat);
                 tillbaka = tillbaka % 50;
             }
-
             resultat = tillbaka / 20;
-
             if (resultat > 0)
             {
                 Console.WriteLine("{0,-15} : {1,1}", "  20-lappar", resultat);
                 tillbaka = tillbaka % 20;
             }
-
             resultat = tillbaka / 5;
-
             if (resultat > 0)
             {
                 Console.WriteLine("{0,-15} : {1,1}", "   5-kronor", resultat);
                 tillbaka = tillbaka % 5;
             }
-
             resultat = tillbaka / 1;
-
             if (resultat > 0)
             {
                 Console.WriteLine("{0,-15} : {1,1}", "   1-kronor", resultat);
                 tillbaka = tillbaka % 1;
-
-
             }
             Console.WriteLine();
             Console.WriteLine();
