@@ -10,7 +10,6 @@ namespace Labb2_Niva_A
     {
         static void Main(string[] args)
         {
-
             //Loop på 25 rader
             for (int rad = 0; rad < 25; rad++)
             {
@@ -24,23 +23,25 @@ namespace Labb2_Niva_A
                 {
                     case 0:
                         Console.ForegroundColor = ConsoleColor.Magenta;
-                        break;
-
+                        {
+                            break;
+                        }
                     case 1:
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        break;
-
+                        {
+                            break;
+                        }
                     case 2:
                         Console.ForegroundColor = ConsoleColor.Green;
-                        break;
-                        
+                        {
+                            break;
+                        }
                 }
+
                 //Loop på 39 kolumner som är inuti den första loopen med rader. 
                 for (int kol = 0; kol < 39; kol++)
-                    
                 {
                     Console.Write("* ");
-                    
                 }
                 Console.WriteLine();
             }
