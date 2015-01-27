@@ -13,54 +13,56 @@ namespace Kylskap_Niva_A
         private decimal _targetTemperature; //Måltemperaturen för kylskåpet.
         //Konstant
         private const decimal OutsideTemperature = 23.7m; //Symboliserar den temperatur som är runt kylskåpet
-        private bool isOn;  
+        private bool isOn;
 
         //Egenskaper
-        public bool DoorIsOpen 
-        { 
-            get; set; 
+        public bool DoorIsOpen
+        {
+            get;
+            set;
         }
 
         public bool IsOn
         {
-            get; set;
+            get;
+            set;
         }
 
-        public decimal InsideTemperature 
+        public decimal InsideTemperature
         {
-            get {return _insideTemperature;}
+            get { return _insideTemperature; }
 
-            set 
-            {   
-                if ( 0 > value || value > 40 )
+            set
+            {
+                if (0 > value || value > 40)
                 {
-                    Console.WriteLine(return string message);
+                    throw new ArgumentException();
                 }
 
                 _insideTemperature = value;
             }
-             
+
         }
 
-        public decimal TargetTemperature 
+        public decimal TargetTemperature
         {
-            get { return _targetTemperature;}
+            get { return _targetTemperature; }
 
-            set 
+            set
+            {
+                if (0 > value || value > 20)
                 {
-                if  (0 > value || value > 20)
-                    {
-                        Console.WriteLine(message);
-                    }
+                    throw new ArgumentException();
+                }
 
                 _targetTemperature = value;
-                }
+            }
         }
 
         //Metoder        
-        public void Tick ()
+        public void Tick()
         {
-            
+
             if (IsOn)
             {
                 if (DoorIsOpen)
@@ -72,9 +74,9 @@ namespace Kylskap_Niva_A
                 {
                     InsideTemperature -= 0.2m;
                 }
-                
+
             }
-                        
+
             else
             {
                 if (DoorIsOpen)
@@ -89,48 +91,46 @@ namespace Kylskap_Niva_A
             }
             // Inte sjunker under TargetTemperature
             if (InsideTemperature <= TargetTemperature)
-                {
-                    InsideTemperature = TargetTemperature;
-                }
-            if(InsideTemperature >= OutsideTemperature)
-                {
-                    InsideTemperature = OutsideTemperature;
-                }
-         }
+            {
+                InsideTemperature = TargetTemperature;
+            }
+            if (InsideTemperature >= OutsideTemperature)
+            {
+                InsideTemperature = OutsideTemperature;
+            }
+        }
 
         ////Använd en decimaler i temperaturen, ConverseParse...?
-        public override string ToString() 
+        public override string ToString()
         {
 
             string onOff = IsOn ? "PÅ" : "AV";
             string doorIsOpen = DoorIsOpen ? "Öppet" : "Stängt";
-            
+
             //Console.WriteLine("[PÅ/AV] : Aktuell temp : (måltemp) - Öppet/Stängt");
             return String.Format("[{0}] : {1:F1}°C : ({2:F1}°C) - {3}", onOff, InsideTemperature, TargetTemperature, doorIsOpen);
         }
 
         //Konstruktorerna
-        public Cooler ()
-            : this (0.0m, 0.0m)
+        public Cooler()
+            : this(0.0m, 0.0m)
         {
-            
+
         }
 
-        public Cooler (decimal insideTemperature, decimal targetTemperature)
+        public Cooler(decimal insideTemperature, decimal targetTemperature)
             : this(insideTemperature, targetTemperature, false, false)
         {
-            
+
         }
 
-        public Cooler (decimal insideTemperature, decimal targetTemperature, bool isOn, bool doorIsOpen)
+        public Cooler(decimal insideTemperature, decimal targetTemperature, bool isOn, bool doorIsOpen)
         {
             InsideTemperature = insideTemperature;
             TargetTemperature = targetTemperature;
             IsOn = isOn;
             DoorIsOpen = doorIsOpen;
         }
-
-
 
         public string message { get; set; }
     }
