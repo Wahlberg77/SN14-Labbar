@@ -13,7 +13,6 @@ namespace Kylskap_Niva_A
         private decimal _targetTemperature; //Måltemperaturen för kylskåpet.
         //Konstant
         private const decimal OutsideTemperature = 23.7m; //Symboliserar den temperatur som är runt kylskåpet
-        private bool isOn;
 
         //Egenskaper
         public bool DoorIsOpen
