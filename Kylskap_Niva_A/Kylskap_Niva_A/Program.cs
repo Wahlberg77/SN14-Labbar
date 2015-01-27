@@ -1,0 +1,126 @@
+﻿    using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Kylskap_Niva_A
+{
+    class Program
+    {
+
+        //-------------------------------------------------------------------------------------------------------
+        //----------------------------Kylskål Nivå A - Andreas Wahlberg SN14-------------------------------------
+        //-------------------------------------------------------------------------------------------------------
+
+        private const string HorizontalLine = "═════════════════════════════════════════════════════════════════════";
+        
+        //Metoden ska instansiera objekt av klassen Cooler och testa konstruktorerna, egenskaperna
+        //och metoderna
+        static void Main(string[] args)
+        {
+            //----TEST NR 1----
+            {
+                Cooler test1 = new Cooler();
+                Console.WriteLine(HorizontalLine);
+                ViewTestHeader("Test 1. \nTest av standardkonstruktorn.");
+                Console.WriteLine(test1.ToString());
+                Console.WriteLine();
+                
+            }
+
+            //----TEST NR 2----
+            {
+                Cooler test2 = new Cooler(24.5m, 4m);
+                Console.WriteLine(HorizontalLine);
+                ViewTestHeader("Test 2. \nTest av konstruktorn med två parametrar, <24,5 och 4>");
+                Console.WriteLine(test2.ToString());
+                Console.WriteLine();
+            }
+
+            //----TEST NR 3----
+            {
+                Cooler test3 = new Cooler(19.5m, 4m, true, false);
+                Console.WriteLine(HorizontalLine);
+                ViewTestHeader("Test 3. \nTest av konstruktorn med två parametrar, <19,5 och 4, True och False>");
+                Console.WriteLine(test3.ToString());
+                Console.WriteLine();
+            }
+
+            //----TEST NR 4----
+            {
+                Cooler test4 = new Cooler(5.3m, 4m, true, false);
+                Console.WriteLine(HorizontalLine);
+                ViewTestHeader("Test 4. \nTest av kylning med metoden Tick");
+                Console.WriteLine();
+                Console.WriteLine(test4.ToString());
+                Run(test4, 10);
+            }//HITTA FELET MED STOPPA NEDRÄKNINGEN!!!
+            
+            //----TEST NR 5----
+            {
+                Cooler test5 = new Cooler(5.3m, 4m, false, false);
+                Console.WriteLine(HorizontalLine);
+                ViewTestHeader("Test 5. \nTest av avstängt kylskåp med metoden Tick, vara avslaget och ha stängd dörr");
+                Console.WriteLine();
+                Console.WriteLine(test5.ToString());
+                Run(test5, 10);
+            }
+
+            //----TEST NR 6----
+            {
+                Cooler test6 = new Cooler(10.2m, 4m, true, true);
+                Console.WriteLine(HorizontalLine);
+                ViewTestHeader("Test 6. \nTest av påslaget kylskåp med metoden Tick, vara på och ha öppen dörr");
+                Console.WriteLine();
+                Console.WriteLine(test6.ToString());
+                Run(test6, 10);
+            }
+
+            //----TEST NR 7----
+            {
+                Cooler test7 = new Cooler(19.7m, 4m, false, true);
+                Console.WriteLine(HorizontalLine);
+                ViewTestHeader("Test 7. \nTest av avslaget kylskåp med metoden Tick, ha öppen dörr");
+                Console.WriteLine();
+                Console.WriteLine(test7.ToString());
+                Run(test7, 10);
+            }
+
+            //----TEST NR 8----
+            {
+                Cooler test8 = new Cooler(85.8m, 94m, false, true);
+                Console.WriteLine(HorizontalLine);
+                ViewTestHeader("Test 8. \nTest av egenskaper så att undantag kastas då innertemperatur och måltemperatur tilldelas felaktiga färden");
+                Console.WriteLine();
+                Console.WriteLine(test8.ToString());
+                
+            }
+        }
+
+        //Privat statisk metod som har två parametrar. Ref till Cooler x2.
+        private static void Run(Cooler clock, int minutes)
+        {
+            for (int ticks = 0; ticks < minutes; ticks++)
+            {
+                clock.Tick();
+                Console.WriteLine(clock.ToString());
+            }
+        }
+
+        //Privat statisk metod som tar en sträng som argument och presenterar strängen
+        private static void ViewTestHeader(string header)
+        {
+            Console.WriteLine(header);
+        }
+
+        //Privat statisk metoden som tar ett felmeddelande som argument och presenterar det.
+        private static void ViewErrorMessage(string message)
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+    }
+
+}
