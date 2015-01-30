@@ -8,15 +8,31 @@ namespace Solida_Volymer_Niva_A
 {
     public class CircularCone : Solid
     {
-        public double BaserArea { get; }
-        public double SurfaceArea { get; }
-        public double Volume { get; }
-
-        public double CircularCone(double radius, double height);
-
-        public override double BaseArea
+        public double BaseArea
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                return Math.PI * (Radius * Radius);
+            }
         }
+
+        public double SurfaceArea
+        {
+            get
+            {
+                return ((Math.PI * Radius) * (Radius + Math.Round(Math.Sqrt(RadiusSquare + HeightSquare))));
+            }
+        }
+
+        public double Volume
+        {
+            get
+            {
+                return (Math.PI * (Radius * Radius) * Height);
+            }
+        }
+
+        public CircularCone(double radius, double height) : base(radius, height) { }
+
     }
 }

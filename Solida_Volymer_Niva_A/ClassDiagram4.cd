@@ -3,19 +3,19 @@
   <Class Name="Solida_Volymer_Niva_A.CircularCone">
     <Position X="4.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAwAAAAAAAAAACAAAAAAAAAAAIACAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAIACAAAAAA=</HashCode>
       <FileName>CircularCone.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Solida_Volymer_Niva_A.Cylinder">
     <Position X="0.5" Y="2.5" Width="3.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAwAAAAAAAAAACAAAAAAAAAAAIACAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAIACAAAAAA=</HashCode>
       <FileName>Cylinder.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Solida_Volymer_Niva_A.Program">
-    <Position X="6.5" Y="1.5" Width="3" />
+    <Position X="6.5" Y="1.5" Width="3.75" />
     <TypeIdentifier>
       <HashCode>AIAEAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAQBAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
@@ -24,7 +24,7 @@
   <Class Name="Solida_Volymer_Niva_A.Solid" Collapsed="true">
     <Position X="3" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>SAAIAAAABgCgAAAEAAAAAAAAAAAAAAAIAAIACAAAAAA=</HashCode>
+      <HashCode>SAAIAAAABgCgAAAEAAAAAAAAAAAAAAAAAAIACAAAAAA=</HashCode>
       <FileName>Solid.cs</FileName>
     </TypeIdentifier>
   </Class>

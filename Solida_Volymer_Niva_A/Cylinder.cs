@@ -6,18 +6,30 @@ using System.Threading.Tasks;
 
 namespace Solida_Volymer_Niva_A
 {
-    class Cylinder : Solid
+    public class Cylinder : Solid
     {
-        public double BaserArea { get; }
-        public double SurfaceArea { get; }
-        public double Volume { get; }
-
-        public double CircularCone(double radius, double height);
-
-
-        public override double BaseArea
+        public double BaseArea
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                return Math.PI * (Radius * Radius);
+            }
         }
+        public double SurfaceArea
+        {
+            get
+            {
+                return (2 * (Math.PI * Radius) * (Height + Radius));
+            }
+        }
+        public double Volume
+        {
+            get
+            {
+                return (Math.PI * (Radius * Radius) * Height);
+            }
+        }
+
+        public Cylinder(double radius, double height) : base (radius, height){} 
     }
 }
