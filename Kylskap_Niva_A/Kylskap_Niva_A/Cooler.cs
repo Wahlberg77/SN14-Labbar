@@ -89,14 +89,22 @@ namespace Kylskap_Niva_A
 
             }
             // Inte sjunker under TargetTemperature
+
+            decimal change = 0.0m;
+            
             if (InsideTemperature <= TargetTemperature)
             {
                 InsideTemperature = TargetTemperature;
             }
-            if (InsideTemperature >= OutsideTemperature)
+            else if (InsideTemperature >= OutsideTemperature)
             {
                 InsideTemperature = OutsideTemperature;
             }
+            else
+            {
+                InsideTemperature += change;
+            }
+            
         }
 
         ////Använd en decimaler i temperaturen, ConverseParse...?
