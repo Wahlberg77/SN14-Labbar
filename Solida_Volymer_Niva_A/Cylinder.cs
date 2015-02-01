@@ -8,25 +8,25 @@ namespace Solida_Volymer_Niva_A
 {
     public class Cylinder : Solid
     {
-        public double BaseArea
+        public override double BaseArea
         {
             get
             {
-                return Math.PI * (Radius * Radius);
+                return Math.PI * RadiusSquare;
             }
         }
-        public double SurfaceArea
+        public override double SurfaceArea
         {
             get
             {
-                return (2 * (Math.PI * Radius) * (Height + Radius));
+                return 2 * Math.PI * Radius * (Height + Radius);
             }
         }
-        public double Volume
+        public override double Volume
         {
             get
             {
-                return (Math.PI * (Radius * Radius) * Height);
+                return Math.PI * RadiusSquare * Height;
             }
         }
 

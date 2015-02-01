@@ -6,81 +6,79 @@ using System.Threading.Tasks;
 
 namespace Solida_Volymer_Niva_A
 {
-    enum SolidType { CircularCone, Cylinder }
+
 
     public abstract class Solid
     {
-
         //Fields
         private double _height;
         private double _radius;
-        
+
         //Abstrakt klass
-        public abstract double BaseArea {get;}
-        
+        public abstract double BaseArea { get; }
+
         //Egenskaper
-        public double Height 
-        { 
-        get
-            {
-                return _height;
-            }
-            
+        public double Height
+        {
+            get { return _height; }
             set
             {
-                if (_height < 0 )
+                if (value < 0)
                 {
                     throw new ArgumentException();
                 }
+                _height = value;
             }
         }
-        public double HeightSquare 
+        public double HeightSquare
         {
             get
             {
                 return (_height * _height);
             }
         }
-        public double Radius 
-        {
-            get
-            {
-                return _radius;
-            }
+        public double Radius { get{ return _radius; }
 
             set
             {
-                if (_radius < 0)
+                if (value < 0)
                 {
                     throw new ArgumentException();
                 }
+                _radius = value;
             }
         }
-        public double RadiusSquare 
+        public double RadiusSquare
         {
             get
             {
                 return (_radius * _radius);
             }
         }
-        
+
         //Abstrakt klass
         public abstract double SurfaceArea { get; }
-                
-        public abstract double Volume {get;}
-        
+        public abstract double Volume { get; }
+
         //Konstruktorn
         protected Solid(double radius, double height)
-        {    
+        {
             Radius = radius;
             Height = height;
         }
-  
+
         //Metoden ToString
         public override string ToString()
-        {   //Kolla detta.. kommer se väldigt knas ut! :=)
-            return string.Format(" {0} : {1} : {2} : {3} : {4}", Radius, Height, Volume, BaseArea, SurfaceArea);
+        {
+            string returnValue;
+            returnValue = String.Format("{0,-12}{10,-8}{1:F2}\n{2,-12}{10,-8}{3:F2}\n{4,-12}{10,-8}{5:F2}\n{6,-12}{10,-8}{7:F2}\n{8,-12}{10,-8}{9:F2}",
+                " Radie (r)", Radius,
+                " Höjd (h)", Height,
+                " Volym", Volume,
+                " Basarea", BaseArea,
+                " Ytarea", SurfaceArea,
+                ":");
+            return returnValue;
         }
     }
-
 }

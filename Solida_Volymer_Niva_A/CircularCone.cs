@@ -8,15 +8,15 @@ namespace Solida_Volymer_Niva_A
 {
     public class CircularCone : Solid
     {
-        public double BaseArea
+        public override double BaseArea
         {
             get
             {
-                return Math.PI * (Radius * Radius);
+                return Math.PI * RadiusSquare;
             }
         }
 
-        public double SurfaceArea
+        public override double SurfaceArea
         {
             get
             {
@@ -24,15 +24,14 @@ namespace Solida_Volymer_Niva_A
             }
         }
 
-        public double Volume
+        public override double Volume
         {
             get
             {
-                return (Math.PI * (Radius * Radius) * Height);
+                return Math.PI * RadiusSquare * Height;
             }
         }
 
         public CircularCone(double radius, double height) : base(radius, height) { }
-
     }
 }

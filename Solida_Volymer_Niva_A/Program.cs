@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Solida_Volymer_Niva_A
-//-------------------------------------------------------------------------------------
-//----------------------- Andreas Wahlberg - Solida Volymer Nivå A --------------------
-//-------------------------------------------------------------------------------------
+                            //-------------------------------------------------------------------------------------
+                            //----------------------- Andreas Wahlberg - Solida Volymer Nivå A --------------------
+                            //-------------------------------------------------------------------------------------
 {
-
+    enum SolidType { CircularCone, Cylinder }
 
     class Program
     {
@@ -36,39 +36,35 @@ namespace Solida_Volymer_Niva_A
                         Console.ResetColor();
                         break;
                 }
-
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
-                Console.Write("\nTryck tangent för att fortsätta");
+                Console.Write("\nTryck tangent för att fortsätta. ESC avslutar!\n");
                 Console.ResetColor();
-
             }
             while (Console.ReadKey(true).Key != ConsoleKey.Escape);
-
         }
-
 
         private static Solid CreateSolid(SolidType solidType)
         {
             Console.BackgroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("╔══════════════════════════════════════════════════════╗");
+            Console.WriteLine("\n╔══════════════════════════════════════════════════════╗");
 
             // Bestäms om det är en Cylinder eller en Cirdularcone!
             switch (solidType)
             {
                 case SolidType.CircularCone: Console.WriteLine
-                             ("║═                       Kon                          ═║");
+                             ("║                        Kon                           ║");
                     break;
 
                 case SolidType.Cylinder: Console.WriteLine
-                             ("║═                      Cylinder                      ═║");
+                             ("║                       Cylinder                       ║");
                     break;
             }
 
             Console.WriteLine("╚══════════════════════════════════════════════════════╝\n");
             Console.ResetColor();
 
-            double radius = ReadDoubleGreaterThanZero("Ange radien <r>: ");
-            double hight = ReadDoubleGreaterThanZero("Ange höjden <r>: ");
+            double radius = ReadDoubleGreaterThanZero("Ange radien (r): ");
+            double hight = ReadDoubleGreaterThanZero("Ange höjden (r): ");
 
             if (solidType == SolidType.CircularCone)
             {
@@ -78,11 +74,11 @@ namespace Solida_Volymer_Niva_A
             {
                 return new Cylinder(radius, hight);
             }
-
         }
 
         private static double ReadDoubleGreaterThanZero(string prompt)
         {
+           
             while (true)
             {
                 Console.Write(prompt);
@@ -103,7 +99,6 @@ namespace Solida_Volymer_Niva_A
                     Console.WriteLine("\nFEL! Ange ett flyttal större än 0.\n");
                     Console.ResetColor();
                 }
-
             }
         }
 
@@ -121,7 +116,7 @@ namespace Solida_Volymer_Niva_A
             Console.WriteLine("1. Kon.\n");
             Console.WriteLine("2. Cylinder.\n");
             Console.WriteLine("════════════════════════════════════════════════════════");
-            Console.Write("Ange ditt menyval [0-2]: ");
+            Console.Write("\nAnge ditt menyval [0-2]: ");
         }
 
         private static void ViewSolidDetail(Solid solid)
