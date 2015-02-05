@@ -61,42 +61,38 @@ namespace Kylskap_Niva_A
         //Metoder        
         public void Tick()
         {
+            decimal change = 0.0m;
 
             if (IsOn)
             {
                 if (DoorIsOpen)
                 {
-                    InsideTemperature += 0.2m;
+                    change = +0.2m;
                 }
-
                 else
                 {
-                    InsideTemperature -= 0.2m;
+                    change -= 0.2m;
                 }
-
             }
 
             else
             {
                 if (DoorIsOpen)
                 {
-                    InsideTemperature += 0.5m;
+                    change += 0.5m;
                 }
                 else
                 {
-                    InsideTemperature += 0.1m;
+                    change += 0.1m;
                 }
-
             }
             // Inte sjunker under TargetTemperature
 
-            decimal change = 0.0m;
-            
-            if (InsideTemperature <= TargetTemperature)
+            if (InsideTemperature + change < TargetTemperature)
             {
                 InsideTemperature = TargetTemperature;
             }
-            else if (InsideTemperature >= OutsideTemperature)
+            else if (InsideTemperature + change > OutsideTemperature)
             {
                 InsideTemperature = OutsideTemperature;
             }
