@@ -10,18 +10,24 @@ namespace Gissa_Talet_MVC_A_Labb_7.Controllers
 {
     public class MainController : Controller
     {
-        //Skapa session om tiden går ut! Får möjlighet att börja om igen. 
-        protected SecretNumber GetSecretnumber()
-        {
-            return Session["Secretnumber"] as SecretNumber ?? (SecretNumber)(Session["Secretnumber"] = new SecretNumber());
-        }
+        ////Skapa session om tiden går ut! Får möjlighet att börja om igen. 
+        //protected SecretNumber GetSecretnumber()
+        //{
+        //    return Session["Secretnumber"] as SecretNumber ?? (SecretNumber)(Session["Secretnumber"] = new SecretNumber());
+        //}
 
         // GET: SectretNumber
         public ActionResult Index()
         {
-            GetSecretnumber().Initialize();
-            var x = new SecretNumber();
-            return View(x);
+            var number = GetNumber();
+            return View(number);
+        }
+
+        //GET:
+        public ActionResult NewPage() 
+        {
+            GetNumber().Initialize();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -30,7 +36,7 @@ namespace Gissa_Talet_MVC_A_Labb_7.Controllers
         {
             if (Session.IsNewSession)
             {
-                return View("SessionTimeout");
+                return View("Session");
             }
             var secretNumber = GetNumber();
 
@@ -51,6 +57,7 @@ namespace Gissa_Talet_MVC_A_Labb_7.Controllers
             }
             return View(secretNumber);
         }
+
         private SecretNumber GetNumber()
         {
             var number = (SecretNumber)Session["Number"];

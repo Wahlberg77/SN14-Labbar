@@ -20,20 +20,27 @@ namespace Gissa_Talet_MVC_A_Labb_7.Models
     {
         public string _OutcomeMessage(Outcome outcome)
         {
-            {
-                switch (LastGuessedNumber.Outcome)
-                {
-                    case Outcome.Initialize: return "Ingen gissning gjord";
-                    case Outcome.Low: return "För lågt ";
-                    case Outcome.High: return "För högt";
-                    case Outcome.Right: return "Grattis, rätt gissat!";
-                    case Outcome.NoMoreGuesses: return "Looser, slut på gissningar";
-                    case Outcome.OldGuess: return "Ni har redan gissat på detta tal";
+            string message = "";
 
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+            switch (outcome)
+            {
+                case Outcome.Right:
+                    return String.Format("Grattis, du klarade det på {0}!", GuessedText);
+                case Outcome.OldGuess:
+                    return String.Format("Du har redan gissat på {0}, välj ett annat tal!", LastGuessedNumber.Number);
+                case Outcome.High:
+                    message = String.Format("{0} är för högt.", LastGuessedNumber.Number);
+                    break;
+                case Outcome.Low:
+                    message = String.Format("{0} är för lågt.", LastGuessedNumber.Number);
+                    break;
             }
+            if (!CanMakeGuess)
+            {
+                message = String.Format("{0} Inga fler gissningar, det hemliga talet var {1}", message, Number);
+            }
+
+            return message;
         }
 
 
@@ -44,22 +51,22 @@ namespace Gissa_Talet_MVC_A_Labb_7.Models
                 string countString = "";
                 switch (Count)
                 {
-                    case 1: countString = "Första";
+                    case 1: countString = "Första gissningen";
                         break;
-                    case 2: countString = "Andra";
+                    case 2: countString = "Andra gissningen";
                         break;
-                    case 3: countString = "Tredje";
+                    case 3: countString = "Tredje gissningen";
                         break;
-                    case 4: countString = "Fjärde";
+                    case 4: countString = "Fjärde gissningen";
                         break;
-                    case 5: countString = "Femte";
+                    case 5: countString = "Femte gissningen";
                         break;
-                    case 6: countString = "Sjätte";
+                    case 6: countString = "Sjätte gissningen";
                         break;
-                    case 7: countString = "Sjunde";
+                    case 7: countString = "Sjunde gissningen";
                         break;
                 }
-                return String.Format("{0} gissningen", countString);
+                return String.Format("{0}", countString);
             }
         }
 
@@ -79,14 +86,7 @@ namespace Gissa_Talet_MVC_A_Labb_7.Models
         {
             get
             {
-                if (Count < MaxNumberOfGuesses && LastGuessedNumber.Outcome != Outcome.Right)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return Count < MaxNumberOfGuesses;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Gissa_Talet_MVC_A_Labb_7.Models
 
         public IList<GuessedNumber> GuessedNumbers
         {
-            //_guessedNumbers.Any = (n == number) - Kolla över detta igen! Lite rövigt just nu...
+
             get
             {
                 {
@@ -125,7 +125,10 @@ namespace Gissa_Talet_MVC_A_Labb_7.Models
                 {
                     return null;
                 }
-                return _number;
+                else
+                {
+                    return _number;
+                }
             }
             private set
             {
@@ -145,39 +148,41 @@ namespace Gissa_Talet_MVC_A_Labb_7.Models
         // guess utanför 1 och 100 ArgumentExc kastas.
         public Outcome MakeGuess(int guess)
         {
-            //_lastGuessedNumber = new GuessedNumber() {Number = guess};
+            if (guess < 1 || guess > 100)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            _lastGuessedNumber = new GuessedNumber { Number = guess };
+
             if (CanMakeGuess)
             {
-                if (guess < 1 || guess > 100)
+                if (_guessedNumbers.Any(n => n.Number == guess))
                 {
-                    throw new ArgumentOutOfRangeException();
+                    _lastGuessedNumber.Outcome = Outcome.OldGuess;
                 }
-                foreach (var item in _guessedNumbers)
-
-                    if (item.Number == guess)
+                else
+                {
+                    if (guess > _number)
                     {
-                        return _lastGuessedNumber.Outcome = Outcome.OldGuess;
+                        _lastGuessedNumber.Outcome = Outcome.High;
                     }
 
-            }
-            //Lågt, högt eller stämmer ska lämpligt värde av Outcome returneras. 
-            //_lastGuessedNumber.Number = guess;
-            _guessedNumbers.Add(_lastGuessedNumber);
+                    else if (guess < _number)
+                    {
+                        _lastGuessedNumber.Outcome = Outcome.Low;
+                    }
 
-            if (guess > _number)
-            {
-                _lastGuessedNumber.Outcome = Outcome.High;
+                    else if (guess == _number)
+                    {
+                        _lastGuessedNumber.Outcome = Outcome.Right;
+                    }
+
+                    _guessedNumbers.Add(_lastGuessedNumber);
+                }
             }
-            else if (guess < _number)
-            {
-                _lastGuessedNumber.Outcome = Outcome.Low;
-            }
-            else if (guess == _number)
-            {
-                _lastGuessedNumber.Outcome = Outcome.Right;
-            }
-            //Slut på gissningar!
-            else
+        
+
+            if (!CanMakeGuess && LastGuessedNumber.Outcome != Outcome.Right)
             {
                 _lastGuessedNumber.Outcome = Outcome.NoMoreGuesses;
             }
@@ -188,7 +193,6 @@ namespace Gissa_Talet_MVC_A_Labb_7.Models
         public SecretNumber()
         {
             _guessedNumbers = new List<GuessedNumber>();
-            _lastGuessedNumber = new GuessedNumber();
             Initialize();
         }
     }
