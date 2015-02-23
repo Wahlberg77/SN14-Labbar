@@ -10,11 +10,6 @@ namespace Gissa_Talet_MVC_A_Labb_7.Controllers
 {
     public class MainController : Controller
     {
-        ////Skapa session om tiden går ut! Får möjlighet att börja om igen. 
-        //protected SecretNumber GetSecretnumber()
-        //{
-        //    return Session["Secretnumber"] as SecretNumber ?? (SecretNumber)(Session["Secretnumber"] = new SecretNumber());
-        //}
 
         // GET: SectretNumber
         public ActionResult Index()
