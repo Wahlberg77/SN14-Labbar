@@ -1,0 +1,95 @@
+﻿@model Gissa_Talet_MVC_A_Labb_7.Models.SecretNumber
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<title>Index</title>
+
+<body>
+    <main>
+        <center>
+            <div class="container">
+                @using (Html.BeginForm())
+                {
+                    if (Model.LastGuessedNumber.Outcome != Gissa_Talet_MVC_A_Labb_7.Models.Outcome.Right)
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary()
+                        <div>
+                            <p>
+                                <center>
+                                    <strong>Gissa ett tal mellan 1 och 100</strong><br />
+                                    <input text" style="width:50px; margin: 5px 5px;" name="number" autofocus disabled="@(!Model.CanMakeGuess)" /><br />
+                                    <button class="btn btn-primary" type="submit" disabled="@(!Model.CanMakeGuess)">Skicka Gissning</button>
+                                </center>
+                            </p>
+                        </div>
+                    }
+
+                    else
+                    {
+                        <h3><strong>Rätt Gissat!</strong></h3>
+                    }
+
+                    if (Model.Count > 0) //Listan börjar skrivas ut här!
+                    {
+                        int number = 1;
+
+                        <p>@Model.GuessedText</p>
+
+                        <div>
+                            @foreach (var item in Model.GuessedNumbers)
+                            {
+                                <table style= "width:50px; border:2px;">
+
+                                    @switch (item.Outcome)
+                                    {
+                                        case Gissa_Talet_MVC_A_Labb_7.Models.Outcome.Right: //När värdet är korrekt. 
+                                            <tr>
+                                                <th class="head">@number</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="success">√<br />@item.Number </td>
+                                            </tr>
+                                            break;
+
+                                        case Gissa_Talet_MVC_A_Labb_7.Models.Outcome.High: //När värdet är för högt.
+                                        <tr>
+                                            <th class="head">@number</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="highValue">↑<br />@item.Number</td>
+                                        </tr>
+                                            break;
+
+                                        case Gissa_Talet_MVC_A_Labb_7.Models.Outcome.Low: // När värdet är för lågt.
+                                        <tr>
+                                            <th class="head">@number</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="lowValue">↓<br />@item.Number</td>
+                                        </tr>
+                                            break;
+
+                                    }
+                                </table>
+                                    number++;
+                            }
+                        </div>
+                    }
+                }
+
+            </div>
+            @*//Vid rätt svar eller/och spela igen.*@
+            @if (!Model.CanMakeGuess)
+            {
+                <div>
+                    <p>Det hemliga talet är: @Html.DisplayTextFor(m => Model.Number)</p>
+                </div>
+                <p>@Html.ActionLink("Spela igen", "Index")</p>
+            }
+
+        </center>
+    </main>
+</body>

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@(ViewBag.Title ?? "Hemliga talet")</title>
+
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <meta name="description" content="Gissa det hemliga talet" />
+</head>
+<body>
+
+    <div class="jumbotron">
+        <center><h1>Gissa det hemliga talet!</h1></center>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+
+
+    <footer>
+
+        <center><p> Copyright: @DateTime.Today.Year - Gissa det hemliga talet - Andreas Wahlberg SN14</p></center>
+
+    </footer>
+
+</body>
+
+</html>
