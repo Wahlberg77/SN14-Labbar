@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Slumpade_Labb8.Models.Kontakter>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Slumpade kontakter";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -35,7 +35,7 @@
                 @Html.DisplayFor(modelItem => item.Epost)
             </td>
             <td>
-                @Html.ActionLink("Ändra en kontakt", "Edit", new { id=item.KontakterId }) |
+                @Html.ActionLink("Ändra en kontakt", "Editera", new { id=item.KontakterId }) |
                 @*@Html.ActionLink("Details", "Details", new { id=item.KontakterId }) |*@
                 @Html.ActionLink("Ta bort en kontakt", "TaBort", new { id=item.KontakterId })
             </td>

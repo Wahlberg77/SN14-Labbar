@@ -22,7 +22,7 @@ namespace Slumpade_Labb8.Controllers
 
         }
 
-        //Mest för testning! (
+        //Mest för testning! 
         public KontaktController(IRepository repository)
         {
             _repository = repository;
@@ -106,7 +106,7 @@ namespace Slumpade_Labb8.Controllers
             }
             //Skickar med egenskaperna som en sträng, uppdatera med nedan egenskaper och inga andra egenskaper än dem man anger. 
             //Gör man inte detta kan andra egenskaper förstöras då dem blir default om man inte gör enligt nedan. 
-            if (TryUpdateModel(kontaktAttUppdatera, string.Empty, new string[] { "FirstName", "LastName", "Emejl"}))
+            if (TryUpdateModel(kontaktAttUppdatera, string.Empty, new string[] { "FirstName", "LastName", "Email" }))
             {
                 try
                 {
@@ -124,9 +124,9 @@ namespace Slumpade_Labb8.Controllers
             return View(kontaktAttUppdatera);
         }
 
-        //Get metod för att plocka bort en produkt. 
+        //GET: Metod för att plocka bort en kontakt. 
         [HttpGet]
-        public ActionResult TaBort(Guid? id)
+        public ActionResult TaBortKontakt(Guid? id)
         {
             if (!id.HasValue)
             {
@@ -149,7 +149,7 @@ namespace Slumpade_Labb8.Controllers
             try
             {
                 var kontakt = new Kontakter { KontakterId = id };
-                _repository.TaBort(kontakt);
+                _repository.TaBortKontakt(kontakt);
                 _repository.Save();
 
                 TempData["success"] = "Kontakten är borttagen";
