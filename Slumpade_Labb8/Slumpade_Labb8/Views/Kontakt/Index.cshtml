@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Slumpade_Labb8.Models.Kontakter>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+
+            @*@Html.ActionLink("Skapa ny kontakt", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Fornamn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Efternamn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Epost)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fornamn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Efternamn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Epost)
+            </td>
+            <td>
+                @Html.ActionLink("Ändra en kontakt", "Edit", new { id=item.KontakterId }) |
+                @*@Html.ActionLink("Details", "Details", new { id=item.KontakterId }) |*@
+                @Html.ActionLink("Ta bort en kontakt", "TaBort", new { id=item.KontakterId })
+            </td>
+        </tr>
+}
+
+</table>

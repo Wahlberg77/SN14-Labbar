@@ -1,0 +1,49 @@
+﻿@model Slumpade_Labb8.Models.Kontakter
+
+@{
+    ViewBag.Title = "TaBort";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ta bort kontakt</h2>
+
+<h3>Bekräfta borttagningen.</h3>
+<div>
+    <h4>Kontakter</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fornamn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fornamn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Efternamn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Efternamn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Epost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Epost)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Tillbaka till kontakter", "Index")
+        </div>
+    }
+</div>
