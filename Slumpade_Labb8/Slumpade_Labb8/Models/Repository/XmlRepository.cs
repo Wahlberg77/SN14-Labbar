@@ -32,11 +32,10 @@ namespace Slumpade_Labb8.Models.Repository
             var kontakt = Document.Descendants("Contact")
                            .Select(element => new Kontakter 
                            {
-                               //Guid och Decimal.Parse används för att ändra från String till Decimal eller Guid. 
                                KontakterId = Guid.Parse(element.Element("Id").Value),
                                Fornamn = element.Element("FirstName").Value,
                                Efternamn = element.Element("LastName").Value,
-                               Epost = element.Element("Email").Value,
+                               Epost = element.Element("Email").Value
                            }).OrderBy(p => p.Efternamn).ToList();
 
             return kontakt;
@@ -49,14 +48,14 @@ namespace Slumpade_Labb8.Models.Repository
                 var element = new XElement("Contact",
                 new XElement("Id", kontakt.KontakterId.ToString()),
                 new XElement("FirstName", kontakt.Fornamn),
-                new XElement("Lastname", kontakt.Efternamn),
+                new XElement("LastName", kontakt.Efternamn),
                 new XElement("Email", kontakt.Epost));
                 
                 Document.Root.Add(element);
             }
         }
 
-        public void Save()
+        public void Spara()
         {
             Document.Save(PhysicalPath);
         }
@@ -65,7 +64,7 @@ namespace Slumpade_Labb8.Models.Repository
         public Kontakter GetKontakt(Guid id)
         {
             return (from kontakt in Document.Descendants("Contact")
-                    where Guid.Parse(kontakt.Element("Id").Value).Equals(id) //Kolla upp. Har jag något ID kvar? Guid?
+                    where Guid.Parse(kontakt.Element("Id").Value).Equals(id)
                     select new Kontakter
                     {
                         KontakterId = Guid.Parse(kontakt.Element("Id").Value),
@@ -94,7 +93,7 @@ namespace Slumpade_Labb8.Models.Repository
         }
 
         //Plockar bort kontakten när den hittar den som matchar. 
-        public void TaBortKontakt(Kontakter kontakt)
+        public void TaBort(Kontakter kontakt)
         {
             var elementToDelete = Document.Descendants("Contact")
                 .Where(element => Guid.Parse(element.Element("Id").Value) == kontakt.KontakterId)

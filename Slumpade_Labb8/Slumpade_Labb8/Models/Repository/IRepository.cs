@@ -10,7 +10,7 @@ namespace Slumpade_Labb8
         Kontakter GetKontakt(Guid id);
         void Skapa(Kontakter kontakt);
         void Uppdatera(Kontakter kontakt);
-        void TaBortKontakt(Kontakter kontakt);
-        void Save();
+        void TaBort(Kontakter kontakt);
+        void Spara();
     }
 }

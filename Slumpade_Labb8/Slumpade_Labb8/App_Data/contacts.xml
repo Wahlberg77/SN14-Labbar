@@ -97,18 +97,6 @@
     <Email>nulla.In@etliberoProin.edu</Email>
   </Contact>
   <Contact>
-    <Id>8C785A7C-2A04-E403-E9CC-10B24D02ADFD</Id>
-    <FirstName>Erich</FirstName>
-    <LastName>Barrera</LastName>
-    <Email>Curae@eget.net</Email>
-  </Contact>
-  <Contact>
-    <Id>45DD89A8-783B-A463-1B89-6C0FDD37D6BE</Id>
-    <FirstName>Malik</FirstName>
-    <LastName>Acevedo</LastName>
-    <Email>pretium.et@Curabiturut.org</Email>
-  </Contact>
-  <Contact>
     <Id>543530D1-C0F2-14E3-687C-116944D0D56B</Id>
     <FirstName>Alec</FirstName>
     <LastName>Chandler</LastName>
@@ -593,5 +581,11 @@
     <FirstName>Mattias</FirstName>
     <LastName>Thander</LastName>
     <Email>mattias@devoid.se</Email>
+  </Contact>
+  <Contact>
+    <Id>de0b966c-1921-4691-87f6-fb081513c975</Id>
+    <FirstName>Ante</FirstName>
+    <LastName>Bengtsson</LastName>
+    <Email>prutt@nisfasdf.se</Email>
   </Contact>
 </Contacts>

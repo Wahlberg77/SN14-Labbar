@@ -36,7 +36,7 @@ namespace Slumpade_Labb8.Controllers
 
         // GET: Kontakt / Skapa
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult Skapa()
         {
             return View();
         }
@@ -45,14 +45,14 @@ namespace Slumpade_Labb8.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //Bind för att skydda sig mot OverPost Attacks, dvs folk på externa sidor som matar in massa skit!
-        public ActionResult Skapa([Bind(Include = "FirstName, LastName, Email")]Kontakter kontakt)
+        public ActionResult Skapa([Bind(Include = "Fornamn, Efternamn, Epost")]Kontakter kontakt)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     _repository.Skapa(kontakt);
-                    _repository.Save();
+                    _repository.Spara();
 
                     TempData["success"] = "Kontakten sparad"; //Används för att ge användaren en bekräftelse på sparad produkt! Baka in med TryCatch sats.
                     return RedirectToAction("Index");
@@ -66,30 +66,18 @@ namespace Slumpade_Labb8.Controllers
             return View(kontakt);
         }
 
-        //GET: Metod för att plocka bort en produkt.
-        [HttpGet]
-        public ActionResult TaBort(Guid? id)
-        {
-            if (!id.HasValue)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-                        
-            return View("Index");
-        }
-
         [HttpGet]
         public ActionResult Editera(Guid? id)
         {
             if (!id.HasValue)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(404, "Du begärde ett oglitigt GUID");
             }
 
             var kontakt = _repository.GetKontakt(id.Value);
             if (kontakt == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, "Kontakten du begärde finns inte eller har just blivit borttagen");
             }
             return View(kontakt);
         }
@@ -97,7 +85,7 @@ namespace Slumpade_Labb8.Controllers
         //Skicka in den redigerade produkten och finns den ej skicka en 404 sida.
         [HttpPost, ActionName("Editera")]
         [ValidateAntiForgeryToken]
-        public ActionResult Editera_POST(Guid id)
+        public ActionResult Uppdatera(Guid id)
         {
             var kontaktAttUppdatera = _repository.GetKontakt(id);
             if (kontaktAttUppdatera == null)
@@ -106,19 +94,19 @@ namespace Slumpade_Labb8.Controllers
             }
             //Skickar med egenskaperna som en sträng, uppdatera med nedan egenskaper och inga andra egenskaper än dem man anger. 
             //Gör man inte detta kan andra egenskaper förstöras då dem blir default om man inte gör enligt nedan. 
-            if (TryUpdateModel(kontaktAttUppdatera, string.Empty, new string[] { "FirstName", "LastName", "Email" }))
+            if (TryUpdateModel(kontaktAttUppdatera, string.Empty, new string[] { "Fornamn", "Efternamn", "Epost" }))
             {
                 try
                 {
                     _repository.Uppdatera(kontaktAttUppdatera);
-                    _repository.Save();
+                    _repository.Spara();
                     //När det är uppdaterat går vi tillbaka till vår Index sida!
-                    TempData["success"] = String.Format("Uppdaterade kontakten {0}", kontaktAttUppdatera.Fornamn);
+                    TempData["success"] = String.Format("Uppdaterade kontakten {0}", kontaktAttUppdatera.Fornamn , kontaktAttUppdatera.Efternamn);
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {
-                    TempData["error"] = String.Format("Misslyckades att uppdatera {0}", kontaktAttUppdatera.Fornamn);
+                    TempData["error"] = String.Format("Misslyckades att uppdatera {0}", kontaktAttUppdatera.Fornamn, kontaktAttUppdatera.Efternamn);
                 }
             }
             return View(kontaktAttUppdatera);
@@ -126,7 +114,7 @@ namespace Slumpade_Labb8.Controllers
 
         //GET: Metod för att plocka bort en kontakt. 
         [HttpGet]
-        public ActionResult TaBortKontakt(Guid? id)
+        public ActionResult TaBort(Guid? id)
         {
             if (!id.HasValue)
             {
@@ -149,8 +137,8 @@ namespace Slumpade_Labb8.Controllers
             try
             {
                 var kontakt = new Kontakter { KontakterId = id };
-                _repository.TaBortKontakt(kontakt);
-                _repository.Save();
+                _repository.TaBort(kontakt);
+                _repository.Spara();
 
                 TempData["success"] = "Kontakten är borttagen";
             }
