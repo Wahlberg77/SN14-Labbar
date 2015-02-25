@@ -12,15 +12,11 @@ namespace Slumpade_Labb8.Controllers
 {
     public class KontaktController : Controller
     {
-
-                //Göra koden testbar, bra att alltid använda. Koda mot en abstraktion.     
+        //Göra koden testbar, bra att alltid använda. Koda mot en abstraktion.     
         private IRepository _repository;
 
         public KontaktController()
-            : this(new XmlRepository())
-        {
-
-        }
+            : this(new XmlRepository()) { }
 
         //Mest för testning! 
         public KontaktController(IRepository repository)
@@ -31,7 +27,8 @@ namespace Slumpade_Labb8.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            return View(_repository.GetKontakt());
+            //return View(_repository.GetKontakt());
+            return View(_repository.GetSenasteKontakten());
         }
 
         // GET: Kontakt / Skapa
@@ -101,7 +98,7 @@ namespace Slumpade_Labb8.Controllers
                     _repository.Uppdatera(kontaktAttUppdatera);
                     _repository.Spara();
                     //När det är uppdaterat går vi tillbaka till vår Index sida!
-                    TempData["success"] = String.Format("Uppdaterade kontakten {0}", kontaktAttUppdatera.Fornamn , kontaktAttUppdatera.Efternamn);
+                    TempData["success"] = String.Format("Uppdaterade kontakten {0}", kontaktAttUppdatera.Fornamn, kontaktAttUppdatera.Efternamn);
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -130,7 +127,7 @@ namespace Slumpade_Labb8.Controllers
         }
 
         //POST: Plocka bort!
-        [HttpPost, ActionName ("TaBort")]
+        [HttpPost, ActionName("TaBort")]
         [ValidateAntiForgeryToken]
         public ActionResult TaBortBekrafta(Guid id)
         {
@@ -150,6 +147,5 @@ namespace Slumpade_Labb8.Controllers
             }
             return RedirectToAction("Index");
         }
-        
     }
 }

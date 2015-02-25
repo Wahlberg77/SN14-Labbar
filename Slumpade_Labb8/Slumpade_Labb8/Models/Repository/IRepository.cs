@@ -12,5 +12,6 @@ namespace Slumpade_Labb8
         void Uppdatera(Kontakter kontakt);
         void TaBort(Kontakter kontakt);
         void Spara();
+        List<Kontakter> GetSenasteKontakten(int count = 20);
     }
 }

@@ -23,26 +23,25 @@ namespace Slumpade_Labb8.Models.Repository
         static XmlRepository()
         {
             var dataDir = AppDomain.CurrentDomain.GetData("DataDirectory");
-            PhysicalPath = Path.Combine(dataDir.ToString(),"contacts.xml");
+            PhysicalPath = Path.Combine(dataDir.ToString(), "contacts.xml");
         }
 
         public List<Kontakter> GetKontakt()
         {
             //Hämta från Document
             var kontakt = Document.Descendants("Contact")
-                           .Select(element => new Kontakter 
+                           .Select(element => new Kontakter
                            {
                                KontakterId = Guid.Parse(element.Element("Id").Value),
                                Fornamn = element.Element("FirstName").Value,
                                Efternamn = element.Element("LastName").Value,
                                Epost = element.Element("Email").Value
-                           }).OrderBy(p => p.Efternamn).ToList();
-
+                           })
+                           .OrderBy(p => p.Efternamn).ToList();
             return kontakt;
-
         }
 
-        public void Skapa (Kontakter kontakt)
+        public void Skapa(Kontakter kontakt)
         {
             {
                 var element = new XElement("Contact",
@@ -50,7 +49,7 @@ namespace Slumpade_Labb8.Models.Repository
                 new XElement("FirstName", kontakt.Fornamn),
                 new XElement("LastName", kontakt.Efternamn),
                 new XElement("Email", kontakt.Epost));
-                
+
                 Document.Root.Add(element);
             }
         }
@@ -59,7 +58,6 @@ namespace Slumpade_Labb8.Models.Repository
         {
             Document.Save(PhysicalPath);
         }
-
 
         public Kontakter GetKontakt(Guid id)
         {
@@ -103,6 +101,16 @@ namespace Slumpade_Labb8.Models.Repository
             {
                 elementToDelete.Remove();
             }
+        }
+        public List<Kontakter> GetSenasteKontakten(int count = 20)
+        {
+            //Hämta från Document
+            var kontakt = GetKontakt()
+                           .Take(count)
+                           .ToList();
+
+            //}).OrderBy(p => p.Efternamn).ToList();
+            return kontakt;
         }
     }
 }

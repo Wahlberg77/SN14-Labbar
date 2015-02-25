@@ -22,17 +22,20 @@
     @foreach (var item in Model) {
         <tr>
             <td>
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 @Html.DisplayFor(modelItem => item.Fornamn)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Efternamn)
             </td>
             <td>
+                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                 @Html.DisplayFor(modelItem => item.Epost)
             </td>
             <td>
-                @Html.ActionLink("Ändra en kontakt", "Editera", new { id=item.KontakterId }) |
-                @Html.ActionLink("Ta bort en kontakt", "TaBort", new { id=item.KontakterId })
+                @Html.ActionLink("Ändra kontakten", "Editera", new { id=item.KontakterId }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Radera kontakten", "TaBort", new { id=item.KontakterId }, new { @class = "btn btn-danger"})
+
             </td>
         </tr>
 }
