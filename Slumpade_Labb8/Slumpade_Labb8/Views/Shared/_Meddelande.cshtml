@@ -1,0 +1,21 @@
+﻿<script type="text/javascript">
+
+    $(document).ready(function() {
+
+    @if (TempData["success"] != null)
+    {
+        <text> @*//Går in i Javascript igen.*@
+            toastr.success('@TempData["success"]')
+        </text>
+    }
+
+    @if (TempData["error"] != null)
+    {
+        <text> @*//Går in i Javascript igen.*@
+        toastr.error('@TempData["error"]')
+        </text>
+    }
+
+    });
+
+</script>

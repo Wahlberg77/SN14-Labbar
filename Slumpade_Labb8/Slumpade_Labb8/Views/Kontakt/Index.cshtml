@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Slumpade_Labb8.Models.Kontakter>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Fornamn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Efternamn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Epost)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                @Html.DisplayFor(modelItem => item.Fornamn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Efternamn)
+            </td>
+            <td>
+                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                @Html.DisplayFor(modelItem => item.Epost)
+            </td>
+            <td>
+                @Html.ActionLink("Ändra kontakten", "Editera", new { id=item.KontakterId }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Radera kontakten", "TaBort", new { id=item.KontakterId }, new { @class = "btn btn-danger"})
+
+            </td>
+        </tr>
+}
+</table>

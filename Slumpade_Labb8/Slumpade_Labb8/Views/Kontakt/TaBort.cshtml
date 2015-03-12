@@ -1,0 +1,26 @@
+﻿@model Slumpade_Labb8.Models.Kontakter
+
+@{
+    ViewBag.Title = "TaBort";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Bekräfta borttagningen</h1>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <p>
+        Bekräfta att du vill ta bort <strong>@Model.Fornamn, @Model.Efternamn</strong>
+    </p>
+    <p>
+        <button class="btn btn-danger">Ta bort @Model.Fornamn ur registret.</button>
+    </p>
+    <p>
+        @Html.ActionLink("Tillbaka", "index")
+    </p>
+}
+
+

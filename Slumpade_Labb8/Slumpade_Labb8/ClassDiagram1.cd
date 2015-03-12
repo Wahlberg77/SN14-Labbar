@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Slumpade_Labb8.RouteConfig" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\RouteConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Slumpade_Labb8.MvcApplication" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Global.asax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Slumpade_Labb8.Controllers.KontaktController" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAICAAABAAAAAAAAAAAACAAAAAAAAABEAAAAAAAA=</HashCode>
+      <FileName>Controllers\KontaktController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Slumpade_Labb8.Models.Kontakter" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAEAAAAAAAAEAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Kontakter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Slumpade_Labb8.Models.Repository.XmlRepository" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.75" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACAAkAAAAQAAAAAAAAAAAAAAQACAJAAAAAAAAA=</HashCode>
+      <FileName>Models\Repository\XmlRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="Slumpade_Labb8.IRepository">
+    <Position X="0.5" Y="2.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAACAAgAAAAAAAAAAAAAAAAAAAQAAAJAAAAAAAAA=</HashCode>
+      <FileName>Models\Repository\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

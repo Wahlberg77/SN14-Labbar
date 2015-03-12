@@ -1,0 +1,73 @@
+﻿@model Gissa_Talet_MVC_A_Labb_7.Models.SecretNumber
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+    <main>
+        <center>
+            <div class="container">
+                @using (Html.BeginForm())
+                {
+                    if (Model.LastGuessedNumber.Outcome != Gissa_Talet_MVC_A_Labb_7.Models.Outcome.Right)
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary()
+                        <div>
+                            <p>
+                                <center>
+                                    <strong>Gissa ett tal mellan 1 och 100</strong><br />
+                                    <input class="input-sm" style="width:50px; margin: 5px 5px;" name="number" autofocus disabled="@(!Model.CanMakeGuess)" /><br />
+                                    <button class="btn btn-primary" type="submit" disabled="@(!Model.CanMakeGuess)">Skicka Gissning</button>
+                                    <br /><k>@Model.GuessedText</k>
+                                </center>
+                            </p>
+                        </div>
+                    }
+
+                    else
+                    {
+                        <h3><strong>Rätt Gissat!</strong></h3>
+                    }
+                }
+
+                @if (Model.Count > 0) //Listan börjar skrivas ut här!
+                {
+                    int number = 1;
+
+                    <p>@Model._OutcomeMessage(Model.LastGuessedNumber.Outcome)</p>
+
+                    <div style="border:2px solid black;text-align:center;display:inline-block">
+
+                        @foreach (var guess in Model.GuessedNumbers)
+                        {
+                            <div class=" pull-left" style="width:60px;">
+                                <div style="background-color:black;color:white;">@number</div>
+
+                                @switch (guess.Outcome)
+                                {
+                                    case Gissa_Talet_MVC_A_Labb_7.Models.Outcome.Right:
+                                        <div class="bg-success">&#10003;<br />@guess.Number</div>
+                                        break;
+
+                                    case Gissa_Talet_MVC_A_Labb_7.Models.Outcome.High:
+                                    <div class="bg-danger">&darr;<br />@guess.Number</div>
+                                        break;
+
+                                    case Gissa_Talet_MVC_A_Labb_7.Models.Outcome.Low:
+                                    <div class="bg-warning">&uarr;<br />@guess.Number</div>
+                                        break;
+                                }
+                            </div>
+                                number++;
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+                    @Html.ActionLink("Slumpa nytt hemligt tal!", "NewPage")
+                }
+            </div>
+        </center>
+    </main>
+</body>
+
