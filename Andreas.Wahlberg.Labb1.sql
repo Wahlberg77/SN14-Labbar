@@ -368,7 +368,7 @@ FROM Production.Product
 ORDER BY ListPrice DESC
 
 --Uppgift 3.19
-SELECT TOP(1) PERCENT 
+SELECT TOP(1) PERCENT
 		DaysToManufacture, 
 		Name
 FROM Production.Product
