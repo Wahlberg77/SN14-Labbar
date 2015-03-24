@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Bibliotek.Kund>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ForNamn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EfterNamn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Adress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HemTelefon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MobilTelefon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Epost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FodelseAr)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ForNamn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EfterNamn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HemTelefon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MobilTelefon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Epost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FodelseAr)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.KundId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.KundId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.KundId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/Styles.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-2.1.3.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+
+    <title>@ViewBag.Title - Bibliotek</title>
+
+    <meta name="description" content="Kontakter" />
+
+</head>
+<body>
+    
+    <div class="jumbotron">
+        <h1>Bibliotek</h1>
+
+        @Html.ActionLink("Skapa ny kontakt", "Skapa", null, new { @class="btn btn-success"})
+    </div>
+    @Html.Partial("_Meddelande")
+    <div>
+        @RenderBody()
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Andreas Wahlberg SN14</p>
+        </footer>
+    </div>
+</body>
+</html>
