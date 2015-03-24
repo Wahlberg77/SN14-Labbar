@@ -65,16 +65,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BibliotekModell.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Bok.cs">
+      <DependentUpon>BibliotekModell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Forfattare.cs">
+      <DependentUpon>BibliotekModell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Kopia.cs">
+      <DependentUpon>BibliotekModell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Kund.cs">
+      <DependentUpon>BibliotekModell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lan.cs">
+      <DependentUpon>BibliotekModell.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="vAntalKopiorTillgangligaUtlaning.cs">
+      <DependentUpon>BibliotekModell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vUtlanadBokAvKundOchVaraTillbaka.cs">
+      <DependentUpon>BibliotekModell.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <EntityDeploy Include="BibliotekModell.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BibliotekModell.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
     <None Include="BibliotekModell.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BibliotekModell.edmx</DependentUpon>

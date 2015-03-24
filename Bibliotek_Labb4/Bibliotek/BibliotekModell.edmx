@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BibliotekDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BibliotekDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bok">
           <Key>
             <PropertyRef Name="BokId" />
@@ -61,7 +61,7 @@
           <Property Name="KundId" Type="int" Nullable="false" />
           <Property Name="KopiaId" Type="int" Nullable="false" />
           <Property Name="LaneDatum" Type="date" Nullable="false" />
-          <Property Name="LamnasTillbaka" Type="date" Nullable="false" />
+          <Property Name="LamnasTillbaka" Type="date" />
           <Property Name="SparradKund" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -176,8 +176,7 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
             <End Role="Lan" EntitySet="Lan" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BibliotekDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -243,7 +242,7 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
           <Property Name="KundId" Type="Int32" Nullable="false" />
           <Property Name="KopiaId" Type="Int32" Nullable="false" />
           <Property Name="LaneDatum" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="LamnasTillbaka" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LamnasTillbaka" Type="DateTime" Precision="0" />
           <Property Name="SparradKund" Type="Int32" />
           <NavigationProperty Name="Kopia" Relationship="Self.Fk_Lan_Kund_KundId" FromRole="Lan" ToRole="Kopia" />
           <NavigationProperty Name="Kund" Relationship="Self.Fk_Lan_Kund" FromRole="Lan" ToRole="Kund" />
@@ -338,7 +337,7 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
             <End Role="Lan" EntitySet="Lans" />
           </AssociationSet>
           <FunctionImport Name="usp_TillbakaLamning">
-            <Parameter Name="KopiaId" Mode="In" Type="Int32" />
+          <Parameter Name="KopiaId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="usp_Utlaning" ReturnType="Collection(Decimal)">
             <Parameter Name="KopiaId" Mode="In" Type="Int32" />

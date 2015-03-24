@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using System.Threading.Tasks;
+using BibliotekLabb4.Models;
 
 namespace BibliotekLabb4.Controllers
 {
@@ -16,30 +17,86 @@ namespace BibliotekLabb4.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            IList<Kund>kunder; 
-            using (var ctx = new Entities())
+            IList<KundVyModell> kunderMedLan; 
+            using (var ctx = new BibliotekDbEntities1())
             {
-                kunder = ctx.Kunds.ToList();
+                var LanPerKund = from k in ctx.Kunds
+                                 join l in ctx.Lans on k.KundId equals l.KundId
+                                 where !l.LamnasTillbaka.HasValue
+                                 group k by k.KundId into Grp
+                                 select new { key = Grp.Key, Count = Grp.Count() };
+
+                kunderMedLan = (from k in ctx.Kunds
+                                    join lk in LanPerKund on k.KundId equals lk.key into lks
+                                    from lk in lks.DefaultIfEmpty()
+                                    select new KundVyModell{KundId = k.KundId, ForNamn = k.ForNamn, EfterNamn = k.EfterNamn, MobilTelefon = k.MobilTelefon, Epost = k.Epost, AntalLan = lk == null ? 0 : lk.Count })
+                                    .ToList();
             }
-            return View(kunder);
+            return View(kunderMedLan);
         }
 
         //GET: Editera Kund
         [HttpGet]
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            using (var ctx = new Entities())
+            KundVyModell kund;
+            using (var ctx = new BibliotekDbEntities1())
             {
-                var LanPerKund = from k in ctx.Kunds
-                        join l in ctx.Lans on k.KundId equals l.KundId
-                        where !l.LamnasTillbaka.HasValue
-                        group k by k.KundId into Grp
-                        select new { key = Grp.key, Count = Grp.count() };
+                var KundBocker = (from l in ctx.Lans
+                                  join k in ctx.Kopias on l.KopiaId equals k.KopiaId
+                                  join b in ctx.Boks on k.BokId equals b.BokId
+                                  where !l.LamnasTillbaka.HasValue && l.KundId == id  
+                                  select new KundBokModell {BokId = b.BokId, 
+                                                            Titel = b.Titel,
+                                                            LaneDatum = l.LaneDatum, //Hantera felet i en VY!
+                                                            LamnasTillbaka = l.LamnasTillbaka.Value })
+                                  .ToList();
+                    kund = (from k in ctx.Kunds
+                                where k.KundId == id
+                                select new KundVyModell
+                                    {
+                                       KundId = k.KundId, 
+                                       ForNamn = k.ForNamn, 
+                                       EfterNamn = k.EfterNamn, 
+                                       MobilTelefon = k.MobilTelefon, 
+                                       Epost = k.Epost
+                                    })
+                                    .FirstOrDefault();
 
-                var KunderMedLan = (from lc in LanPerKund
-                                    join c in ctx.Kunds on lc.key equals c.KundId
-                                    select new { Kund = c, count = lc.Count }).ToList();
+                if (kund != null)
+                {
+                    kund.Bocker = KundBocker;
+                }
             }
+            return View(kund);
+      }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            KundTaBortModell delete;
+            using (var ctx = new BibliotekDbEntities1())
+            {
+                var harlan = ctx.Lans.Any(x => x.KundId == id && x.LaneDatum > x.LamnasTillbaka);
+
+                delete = (from k in ctx.Kunds
+                          where k.KundId == id
+                          select new KundTaBortModell
+                          {
+                              KundId = k.KundId,
+                              ForNamn = k.ForNamn,
+                              EfterNamn = k.EfterNamn,
+                              HarLan = harlan
+                          })
+                          .FirstOrDefault();
+
+                // if (delete != null)
+                //{
+                //    ctx.Kunds.Remove(id);
+                //    ctx.SaveChanges();
+                //}
+            }
+            return View(delete);
         }
 
         // GET: Kontakt / Skapa

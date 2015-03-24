@@ -1,15 +1,13 @@
-﻿@model IEnumerable<Bibliotek.Kund>
+﻿@model IEnumerable<BibliotekLabb4.Models.KundVyModell>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 <table class="table">
     <tr>
         <th>
@@ -19,22 +17,16 @@
             @Html.DisplayNameFor(model => model.EfterNamn)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Adress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HemTelefon)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.MobilTelefon)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Epost)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Kon)
+            @Html.DisplayNameFor(model => model.AntalLan)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FodelseAr)
+            @Html.DisplayNameFor(model => model.KundId)
         </th>
         <th></th>
     </tr>
@@ -48,27 +40,21 @@
             @Html.DisplayFor(modelItem => item.EfterNamn)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Adress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HemTelefon)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.MobilTelefon)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Epost)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Kon)
+            @Html.DisplayFor(modelItem => item.AntalLan)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FodelseAr)
+            @Html.DisplayFor(modelItem => item.KundId)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.KundId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.KundId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.KundId })
+            @Html.ActionLink("Edit", "Edit", new { id=item.KundId}) |
+            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+            @Html.ActionLink("Ta bort", "Delete", new { id = item.KundId})
         </td>
     </tr>
 }
