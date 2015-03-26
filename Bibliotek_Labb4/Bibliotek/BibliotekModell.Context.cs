@@ -35,6 +35,15 @@ namespace Bibliotek
         public virtual DbSet<vAntalKopiorTillgangligaUtlaning> vAntalKopiorTillgangligaUtlanings { get; set; }
         public virtual DbSet<vUtlanadBokAvKundOchVaraTillbaka> vUtlanadBokAvKundOchVaraTillbakas { get; set; }
     
+        public virtual int DeleteKund(Nullable<int> kundId)
+        {
+            var kundIdParameter = kundId.HasValue ?
+                new ObjectParameter("KundId", kundId) :
+                new ObjectParameter("KundId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteKund", kundIdParameter);
+        }
+    
         public virtual int usp_TillbakaLamning(Nullable<int> kopiaId)
         {
             var kopiaIdParameter = kopiaId.HasValue ?

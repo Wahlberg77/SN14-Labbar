@@ -52,9 +52,9 @@
             @Html.DisplayFor(modelItem => item.KundId)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.KundId}) |
-            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-            @Html.ActionLink("Ta bort", "Delete", new { id = item.KundId})
+            @Html.ActionLink("Ändra kund", "Edit", new { id=item.KundId}) |
+            @*@Html.ActionLink("Detaljer", "Details", new { id=item.KundId }) |*@
+            @Html.ActionLink("Ta bort kund", "Delete", new { id = item.KundId})
         </td>
     </tr>
 }

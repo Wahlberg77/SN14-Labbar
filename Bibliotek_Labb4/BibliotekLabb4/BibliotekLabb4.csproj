@@ -138,6 +138,7 @@
     <Compile Include="Models\KundBokModell.cs" />
     <Compile Include="Models\KundTaBortModell.cs" />
     <Compile Include="Models\KundVyModell.cs" />
+    <Compile Include="Models\Lanabok.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,19 +17,24 @@ namespace BibliotekLabb4.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            IList<KundVyModell> kunderMedLan; 
+            IList<KundVyModell> kunderMedLan;
             using (var ctx = new BibliotekDbEntities1())
             {
                 var LanPerKund = from k in ctx.Kunds
                                  join l in ctx.Lans on k.KundId equals l.KundId
-                                 where !l.LamnasTillbaka.HasValue
+                                 where l.LamnasTillbaka.HasValue
                                  group k by k.KundId into Grp
                                  select new { key = Grp.Key, Count = Grp.Count() };
 
                 kunderMedLan = (from k in ctx.Kunds
-                                    join lk in LanPerKund on k.KundId equals lk.key into lks
-                                    from lk in lks.DefaultIfEmpty()
-                                    select new KundVyModell{KundId = k.KundId, ForNamn = k.ForNamn, EfterNamn = k.EfterNamn, MobilTelefon = k.MobilTelefon, Epost = k.Epost, AntalLan = lk == null ? 0 : lk.Count })
+                                join lk in LanPerKund on k.KundId equals lk.key into lks
+                                from lk in lks.DefaultIfEmpty()
+                                select new KundVyModell { KundId = k.KundId, 
+                                                          ForNamn = k.ForNamn, 
+                                                          EfterNamn = k.EfterNamn, 
+                                                          MobilTelefon = k.MobilTelefon, 
+                                                          Epost = k.Epost, 
+                                                          AntalLan = lk == null ? 0 : lk.Count })
                                     .ToList();
             }
             return View(kunderMedLan);
@@ -45,23 +50,26 @@ namespace BibliotekLabb4.Controllers
                 var KundBocker = (from l in ctx.Lans
                                   join k in ctx.Kopias on l.KopiaId equals k.KopiaId
                                   join b in ctx.Boks on k.BokId equals b.BokId
-                                  where !l.LamnasTillbaka.HasValue && l.KundId == id  
-                                  select new KundBokModell {BokId = b.BokId, 
-                                                            Titel = b.Titel,
-                                                            LaneDatum = l.LaneDatum, //Hantera felet i en VY!
-                                                            LamnasTillbaka = l.LamnasTillbaka.Value })
+                                  where !l.LamnasTillbaka.HasValue && l.KundId == id
+                                  select new KundBokModell
+                                  {
+                                      BokId = b.BokId,
+                                      Titel = b.Titel,
+                                      LaneDatum = l.LaneDatum, //Hantera felet i en VY!
+                                      LamnasTillbaka = l.LamnasTillbaka.Value
+                                  })
                                   .ToList();
-                    kund = (from k in ctx.Kunds
-                                where k.KundId == id
-                                select new KundVyModell
-                                    {
-                                       KundId = k.KundId, 
-                                       ForNamn = k.ForNamn, 
-                                       EfterNamn = k.EfterNamn, 
-                                       MobilTelefon = k.MobilTelefon, 
-                                       Epost = k.Epost
-                                    })
-                                    .FirstOrDefault();
+                kund = (from k in ctx.Kunds
+                        where k.KundId == id
+                        select new KundVyModell
+                            {
+                                KundId = k.KundId,
+                                ForNamn = k.ForNamn,
+                                EfterNamn = k.EfterNamn,
+                                MobilTelefon = k.MobilTelefon,
+                                Epost = k.Epost
+                            })
+                                .FirstOrDefault();
 
                 if (kund != null)
                 {
@@ -69,16 +77,19 @@ namespace BibliotekLabb4.Controllers
                 }
             }
             return View(kund);
-      }
+        }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
             KundTaBortModell delete;
+
             using (var ctx = new BibliotekDbEntities1())
             {
-                var harlan = ctx.Lans.Any(x => x.KundId == id && x.LaneDatum > x.LamnasTillbaka);
-
+                var harLan = (from l in ctx.Lans
+                              join k in ctx.Kopias on l.KopiaId equals k.KopiaId
+                              where l.KundId == id && k.Status > 1
+                              select l).Any();
                 delete = (from k in ctx.Kunds
                           where k.KundId == id
                           select new KundTaBortModell
@@ -86,18 +97,107 @@ namespace BibliotekLabb4.Controllers
                               KundId = k.KundId,
                               ForNamn = k.ForNamn,
                               EfterNamn = k.EfterNamn,
-                              HarLan = harlan
-                          })
-                          .FirstOrDefault();
+                              HarLan = harLan
+                          }).FirstOrDefault();
 
-                // if (delete != null)
-                //{
-                //    ctx.Kunds.Remove(id);
-                //    ctx.SaveChanges();
-                //}
             }
             return View(delete);
         }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirm(int id)
+        {
+            try
+            {
+                using (var ctx = new BibliotekDbEntities1())
+                {
+                    var harLan = (from l in ctx.Lans
+                                  join k in ctx.Kopias on l.KopiaId equals k.KopiaId
+                                  where l.KundId == id && k.Status > 1
+                                  select l).Any();
+                    if (harLan)
+                    {
+                        throw new InvalidOperationException();
+                    }
+                    ctx.DeleteKund(id);
+                }
+            }
+            catch (Exception)
+            {
+                TempData["error"] = "Misslyckades att ta bort kunden, den har ett aktivt lån.";
+                RedirectToAction("Delete", new { id = id });
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Lana(int id)
+        {
+            IList<Lanabok> lanaBok;
+            using (var ctx = new BibliotekDbEntities1())
+            {
+                //var LanadBok = from k in ctx.Kunds
+                //               join p in ctx.Kopias on k.KundId equals p.
+
+                lanaBok = (from l in ctx.Lans
+                           join p in ctx.Kopias on l.KopiaId equals p.KopiaId
+                           join k in ctx.Kunds on l.KundId equals k.KundId
+                           join b in ctx.Boks on p.BokId equals b.BokId
+                           where k.KundId == id && p.KopiaId == id
+                           select new Lanabok
+                           {
+                               Titel = b.Titel
+                           }).ToList();
+
+            }
+            return View(lanaBok);
+        }
+
+        [HttpPost, ActionName("Lana")]
+        public ActionResult LanaConfirmed(int id)
+        {
+            try
+            {
+               using (var ctx = new BibliotekDbEntities1())
+               {
+                   //var LanadBok = from l in ctx.Lans
+                   //                join p in ctx.Kopias on l.KopiaId equals p.KopiaId
+                   //                where l.LanId == id & l.LanId != p.KopiaId select 1)
+                   //                .Any();
+
+                   //if (LanadBok)
+                   //{
+                   //    throw new InvalidOperationException();
+                   //}
+                   //ctx.usp_Utlaning(id);
+               }
+
+            }
+            catch (Exception)
+            {
+                TempData["error"] = "Misslyckades att Lana bok";
+                RedirectToAction("LanaBok", new { id = id });
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+
+
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirm(int id)
+        //{
+        //    KundTaBortModell deleteConfirm;
+
+        //    using (var ctx = new BibliotekDbEntities1())
+
+
+
+        // }
+
 
         // GET: Kontakt / Skapa
         //[HttpGet]

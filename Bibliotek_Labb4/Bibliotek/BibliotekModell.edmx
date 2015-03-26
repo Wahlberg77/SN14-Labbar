@@ -37,7 +37,7 @@
           <Property Name="Inkopspris" Type="smallmoney" Nullable="false" />
           <Property Name="InkopsAr" Type="date" />
           <Property Name="BokId" Type="int" Nullable="false" />
-          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Kund">
           <Key>
@@ -79,11 +79,10 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
           <Key>
             <PropertyRef Name="BokTitel" />
             <PropertyRef Name="Kund" />
-            <PropertyRef Name="LamnasTillbaka" />
           </Key>
           <Property Name="BokTitel" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Kund" Type="varchar" MaxLength="61" Nullable="false" />
-          <Property Name="LamnasTillbaka" Type="date" Nullable="false" />
+          <Property Name="LamnasTillbaka" Type="date" />
         </EntityType>
         <Association Name="Fk_Forfattare_Bok_ForfattarId">
           <End Role="Forfattare" Type="Self.Forfattare" Multiplicity="1" />
@@ -133,6 +132,9 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteKund" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="KundId" Type="int" Mode="In" />
+        </Function>
         <Function Name="usp_TillbakaLamning" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="KopiaId" Type="int" Mode="In" />
         </Function>
@@ -215,7 +217,7 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
           <Property Name="Inkopspris" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
           <Property Name="InkopsAr" Type="DateTime" Precision="0" />
           <Property Name="BokId" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Bok" Relationship="Self.Fk_Kopia_Bok_BokId" FromRole="Kopia" ToRole="Bok" />
           <NavigationProperty Name="Lans" Relationship="Self.Fk_Lan_Kund_KundId" FromRole="Kopia" ToRole="Lan" />
         </EntityType>
@@ -253,16 +255,6 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
           </Key>
           <Property Name="Titel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AntalTillgangliga" Type="Int32" />
-        </EntityType>
-        <EntityType Name="vUtlanadBokAvKundOchVaraTillbaka">
-          <Key>
-            <PropertyRef Name="BokTitel" />
-            <PropertyRef Name="Kund" />
-            <PropertyRef Name="LamnasTillbaka" />
-          </Key>
-          <Property Name="BokTitel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Kund" Type="String" MaxLength="61" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LamnasTillbaka" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <Association Name="Fk_Forfattare_Bok_ForfattarId">
           <End Role="Forfattare" Type="Self.Forfattare" Multiplicity="1" />
@@ -319,7 +311,6 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
           <EntitySet Name="Kunds" EntityType="Self.Kund" />
           <EntitySet Name="Lans" EntityType="Self.Lan" />
           <EntitySet Name="vAntalKopiorTillgangligaUtlanings" EntityType="Self.vAntalKopiorTillgangligaUtlaning" />
-          <EntitySet Name="vUtlanadBokAvKundOchVaraTillbakas" EntityType="Self.vUtlanadBokAvKundOchVaraTillbaka" />
           <AssociationSet Name="Fk_Forfattare_Bok_ForfattarId" Association="Self.Fk_Forfattare_Bok_ForfattarId">
             <End Role="Forfattare" EntitySet="Forfattares" />
             <End Role="Bok" EntitySet="Boks" />
@@ -336,6 +327,9 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
             <End Role="Kund" EntitySet="Kunds" />
             <End Role="Lan" EntitySet="Lans" />
           </AssociationSet>
+          <FunctionImport Name="DeleteKund">
+          <Parameter Name="KundId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="usp_TillbakaLamning">
           <Parameter Name="KopiaId" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -343,7 +337,17 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
             <Parameter Name="KopiaId" Mode="In" Type="Int32" />
             <Parameter Name="KundId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="vUtlanadBokAvKundOchVaraTillbakas" EntityType="BibliotekDbModel.vUtlanadBokAvKundOchVaraTillbaka" />
         </EntityContainer>
+        <EntityType Name="vUtlanadBokAvKundOchVaraTillbaka">
+          <Key>
+            <PropertyRef Name="BokTitel" />
+            <PropertyRef Name="Kund" />
+          </Key>
+          <Property Name="BokTitel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Kund" Type="String" Nullable="false" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="LamnasTillbaka" Type="DateTime" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -422,17 +426,18 @@ warning 6002: The table/view 'BibliotekDb.dbo.vUtlanadBokAvKundOchVaraTillbaka' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteKund" FunctionName="BibliotekDbModel.Store.DeleteKund" />
+          <FunctionImportMapping FunctionImportName="usp_TillbakaLamning" FunctionName="BibliotekDbModel.Store.usp_TillbakaLamning" />
+          <FunctionImportMapping FunctionImportName="usp_Utlaning" FunctionName="BibliotekDbModel.Store.usp_Utlaning" />
           <EntitySetMapping Name="vUtlanadBokAvKundOchVaraTillbakas">
             <EntityTypeMapping TypeName="BibliotekDbModel.vUtlanadBokAvKundOchVaraTillbaka">
               <MappingFragment StoreEntitySet="vUtlanadBokAvKundOchVaraTillbaka">
-                <ScalarProperty Name="BokTitel" ColumnName="BokTitel" />
-                <ScalarProperty Name="Kund" ColumnName="Kund" />
                 <ScalarProperty Name="LamnasTillbaka" ColumnName="LamnasTillbaka" />
+                <ScalarProperty Name="Kund" ColumnName="Kund" />
+                <ScalarProperty Name="BokTitel" ColumnName="BokTitel" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="usp_TillbakaLamning" FunctionName="BibliotekDbModel.Store.usp_TillbakaLamning" />
-          <FunctionImportMapping FunctionImportName="usp_Utlaning" FunctionName="BibliotekDbModel.Store.usp_Utlaning" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

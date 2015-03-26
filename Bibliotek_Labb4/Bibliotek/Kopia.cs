@@ -23,7 +23,7 @@ namespace Bibliotek
         public decimal Inkopspris { get; set; }
         public Nullable<System.DateTime> InkopsAr { get; set; }
         public int BokId { get; set; }
-        public string Status { get; set; }
+        public int Status { get; set; }
     
         public virtual Bok Bok { get; set; }
         public virtual ICollection<Lan> Lans { get; set; }

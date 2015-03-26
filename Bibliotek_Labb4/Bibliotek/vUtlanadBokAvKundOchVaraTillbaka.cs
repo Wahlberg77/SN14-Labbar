@@ -16,6 +16,6 @@ namespace Bibliotek
     {
         public string BokTitel { get; set; }
         public string Kund { get; set; }
-        public System.DateTime LamnasTillbaka { get; set; }
+        public Nullable<System.DateTime> LamnasTillbaka { get; set; }
     }
 }
